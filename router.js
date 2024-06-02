@@ -11,6 +11,6 @@ router.post('/deleteuser', controller.deleteUser);
 
 router.get('/getbilldata', controller.getBilldata);
 router.post('/addbilldata', controller.addBillData);
-router.post('/calculatebilldata', controller.calculateBill);
+router.get('/calculatebilldata', controller.calculateBill);
 
 module.exports = router;

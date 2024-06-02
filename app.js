@@ -42,25 +42,25 @@ app.post('/deleteuser', (req, res) => {
     
         });
 
-
+// show unit oldValue and newValue
 app.get('/getbilldata', (req, res) => {
-        controller.deleteUser(req.body,(callback)=>{
+        controller.getBilldata(req.body,(callback)=>{
                 res.send(callback);
             })
         
             });        
 
-
-app.get('/addbilldata', (req, res) => {
-                controller.deleteUser(req.body,(callback)=>{
+// post unit oldValue and newValue to database
+app.post('/addbilldata', (req, res) => {
+                controller.addBillData(req.body,(callback)=>{
                         res.send(callback);
                     })
                 
                     });
                     
-                    
-app.post('/calculatebilldata', (req, res) => {
-                        controller.deleteUser(req.body,(callback)=>{
+ // calculation process                  
+app.get('/calculatebilldata', (req, res) => {
+                        controller.calculateBill(req.body,(callback)=>{
                                 res.send(callback);
                             })
                         

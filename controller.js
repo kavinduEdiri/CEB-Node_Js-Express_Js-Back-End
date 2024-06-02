@@ -1,6 +1,6 @@
 // controller.js
 
-const { User1, User2 } = require('./model');
+const { User1, User2, User3 } = require('./model');
 
 // For form
 const getUsers = (req, res, next) => {
@@ -77,14 +77,29 @@ const addBillData = (req, res, next) => {
     });
 };
 
+
+
+
 const calculateBill = async (req, res, next) => {
   try {
+    // Step 1: Get data from User2
     const bills = await User2.find();
+
+    // Step 2: Calculate the total
     const totalBill = bills.map(bill => ({
       ...bill._doc,
       total: bill.newValue + bill.oldValue,
     }));
-    res.json({ totalBill });
+
+    // Step 3: Save the total in User3
+    const totalsToSave = totalBill.map(bill => new User3({ total: bill.total }));
+    await User3.insertMany(totalsToSave);
+
+    // Step 4: Retrieve the saved data from User3
+    const savedTotals = await User3.find();
+
+    // Respond with the saved totals
+    res.json({ savedTotals });
   } catch (error) {
     res.json({ error });
   }
