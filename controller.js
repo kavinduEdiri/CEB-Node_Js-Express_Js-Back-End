@@ -85,21 +85,55 @@ const calculateBill = async (req, res, next) => {
     // Step 1: Get data from User2
     const bills = await User2.find();
 
-    // Step 2: Calculate the total
-    const totalBill = bills.map(bill => ({
+    // Step 2: Calculate the unit
+    const totalUnits = bills.map(bill => ({
       ...bill._doc,
-      total: bill.newValue + bill.oldValue,
+      unit: bill.newValue - bill.oldValue,
     }));
 
-    // Step 3: Save the total in User3
-    const totalsToSave = totalBill.map(bill => new User3({ total: bill.total }));
-    await User3.insertMany(totalsToSave);
+    // Step 3: Save the unit in User3
+    const unitsToSave = totalUnits.map(bill => new User3({ total: bill.unit })); // Assuming User3 model stores 'total' as 'unit'
+    await User3.insertMany(unitsToSave);
 
     // Step 4: Retrieve the saved data from User3
-    const savedTotals = await User3.find();
+    const savedUnits = await User3.find();
 
-    // Respond with the saved totals
-    res.json({ savedTotals });
+    // Step 5: Calculation bill using savedUnit
+    const c = 650;
+    const d = 100;
+    const other = c + d;
+    let payToSave = [];
+
+    savedUnits.forEach(async (unitDoc) => {
+      const savedUnit = unitDoc.total; // Assuming 'total' is where 'unit' is stored
+      let amount, pay;
+
+      if (savedUnit < 27) {
+        amount = savedUnit * 42;
+        pay = amount + other;
+        payToSave.push(new User4({ pay }));
+      } else if (savedUnit >= 27 && savedUnit < 54) {
+        amount = 27 * 42 + (savedUnit - 27) * 62;
+        pay = amount + other;
+        payToSave.push(new User4({ pay }));
+      } else if (savedUnit >= 54) {
+        amount = 27 * 42 + 27 * 62 + (savedUnit - 54) * 82;
+        pay = amount + other;
+        payToSave.push(new User4({ pay }));
+      } else {
+        res.json({ error: "Invalid unit value" });
+        return;
+      }
+    });
+
+    // Save all calculated pays in User4
+    await User4.insertMany(payToSave);
+
+    // Step 6: Get saved data
+    const savedPays = await User4.find();
+
+    // Respond with the saved payments
+    res.json({ savedPays });
   } catch (error) {
     res.json({ error });
   }
@@ -131,6 +165,19 @@ const addPay = (req, res, next) => {
       res.json({ error });
     });
 };
+
+
+const deletePay = (req, res, next) => {
+  const pay = req.body.pay;
+  User4.deleteOne({ pay: pay })
+    .then(response => {
+      res.json({ response });
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+};
+
 //==============pay============
 module.exports = {
   getUsers,
@@ -141,7 +188,8 @@ module.exports = {
   addBillData,
   calculateBill,
   getPay,
-  addPay
+  addPay,
+  deletePay
 };
 
 

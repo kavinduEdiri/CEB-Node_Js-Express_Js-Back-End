@@ -82,7 +82,14 @@ app.post('/addpay', (req, res) => {
                                 })
                             
                                 });
-                                                       
+ 
+                                
+app.post('/deletepay', (req, res) => {
+                    controller.deletePay(req.body,(callback)=>{
+                                res.send(callback);
+                                    })
+                                
+                                    });
 //=========== Rest API ============
 
 app.use('/api', router);

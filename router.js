@@ -15,5 +15,6 @@ router.get('/calculatebilldata', controller.calculateBill);
 
 router.get('/getpay', controller.getPay);
 router.post('/addpay', controller.addPay);
+router.post('/deletepay', controller.deletePay);
 
 module.exports = router;

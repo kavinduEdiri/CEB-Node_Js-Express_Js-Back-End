@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const router = require('./router');
-const port = 3055;
+const port = 3057;
 const host = '127.0.0.1';
 
 const app = express();
