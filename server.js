@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const router = require('./router');
-const port = 3048;
+const port = 3055;
 const host = '127.0.0.1';
 
 const app = express();
@@ -12,12 +12,12 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB URI
-const uri = 'mongodb+srv://dewminichamasha13:ztI8VXTHZyteUqm5@cluster0.zaeos6o.mongodb.net/myDatabaseName?retryWrites=true&w=majority&appName=Cluster0';
+const uri = 'mongodb+srv://dewminichamasha13:ztI8VXTHZyteUqm5@cluster0.zaeos6o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 // Connection options
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true, 
 };
 
 // Connect to MongoDB

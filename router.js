@@ -13,4 +13,7 @@ router.get('/getbilldata', controller.getBilldata);
 router.post('/addbilldata', controller.addBillData);
 router.get('/calculatebilldata', controller.calculateBill);
 
+router.get('/getpay', controller.getPay);
+router.post('/addpay', controller.addPay);
+
 module.exports = router;

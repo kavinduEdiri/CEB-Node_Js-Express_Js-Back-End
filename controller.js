@@ -1,6 +1,6 @@
 // controller.js
 
-const { User1, User2, User3 } = require('./model');
+const { User1, User2, User3, User4 } = require('./model');
 
 // For form
 const getUsers = (req, res, next) => {
@@ -105,6 +105,33 @@ const calculateBill = async (req, res, next) => {
   }
 };
 
+
+
+//==============pay============
+const getPay = (req, res, next) => {
+  User4.find()
+    .then(response => {
+      res.json({ response });
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+};
+
+const addPay = (req, res, next) => {
+  const user = new User4({
+    pay: req.body.pay,
+    
+  });
+  user.save()
+    .then(response => {
+      res.json({ response });
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+};
+//==============pay============
 module.exports = {
   getUsers,
   addUser,
@@ -113,6 +140,8 @@ module.exports = {
   getBilldata,
   addBillData,
   calculateBill,
+  getPay,
+  addPay
 };
 
 

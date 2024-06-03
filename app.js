@@ -64,7 +64,25 @@ app.get('/calculatebilldata', (req, res) => {
                                 res.send(callback);
                             })
                         
-                            });                    
+                            });     
+                            
+                            
+
+
+app.get('/getpay', (req, res) => {
+                                controller.getPay((req,res,next) => {
+                                    res.send();
+                                });
+                            });
+                            
+                            // create data users
+app.post('/addpay', (req, res) => {
+                                controller.addPay(req.body,(callback)=>{
+                                    res.send();
+                                })
+                            
+                                });
+                                                       
 //=========== Rest API ============
 
 app.use('/api', router);
